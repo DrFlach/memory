@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    div {position:absolute;
+        border: 1px solid black;}
+    #ekran {width: 400px; height: 400px;
+            top: 200px; left:50px;}
+    .mini {width: 100px; height: 100px;
+            top: 50px;}
+    .mini img{width:100px; height:100px;}
+    #ekran img{width:400px; height:400px;}
+</style>
+<script>
+    function Wyswietl(x){
+        ekran.innerHTML=x.innerHTML;
+    }
+</script>
+</head>
+<body>
+    <div class="mini" id ="a1" style="left:50px" onclick="Wyswietl(this)"><img src="1.jpg"></div>
+    <div class="mini" id ="a2"style="left:150px" onclick="Wyswietl(this)"><img src="2.jpg"></div>
+    <div class="mini" id ="a3"style="left:250px" onclick="Wyswietl(this)"><img src="3.jpg"></div>
+    <div class="mini" id ="a4"style="left:350px" onclick="Wyswietl(this)"><img src="4.jpg"></div>
+    <div class="mini" id ="a5"style="left:450px" onclick="Wyswietl(this)"><img src="5.jpg"></div>
+    <div id="ekran"> </div>
+</body>
+</html> 

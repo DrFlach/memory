@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+    <style>
+        div {
+            position: absolute;
+            border: 1px solid black;
+        }
+        .mini {
+            width: 100px;
+            height: 100px;
+            top: 50px;
+        }
+        .mini img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <input type="button" value="zakryj" onclick="Zakryj()">
+        <input type="button" value="mieszaj" onclick="Mieszaj()">
+    </form>
+    <div class="mini" onclick="Graj(this)"></div>
+    <div class="mini" onclick="Graj(this)"></div>
+    <div class="mini" onclick="Graj(this)"></div>
+    <div class="mini" onclick="Graj(this)"></div>
+    <div class="mini" onclick="Graj(this)"></div>
+    <div class="mini" onclick="Graj(this)"></div>
+	<div class="mini" onclick="Graj(this)"></div>
+    <div class="mini" onclick="Graj(this)"></div>
+    <div class="mini" onclick="Graj(this)"></div>
+	<div class="mini" onclick="Graj(this)"></div>
+    <div class="mini" onclick="Graj(this)"></div>
+    <div class="mini" onclick="Graj(this)"></div>
+	<div class="mini" onclick="Graj(this)"></div>
+    <div class="mini" onclick="Graj(this)"></div>
+    <div class="mini" onclick="Graj(this)"></div>
+	<div class="mini" onclick="Graj(this)"></div>
+    <div class="mini" onclick="Graj(this)"></div>
+    <div class="mini" onclick="Graj(this)"></div>
+    <script>
+        let TabPos = [[50,50],[150,50],[250,50],[50,150],[150,150],[250,150],[50,250],[150,250],[250,250],[50,350],[150,350],[250,350],[50,450],[150,450],[250,450],[50,550],[150,550],[250,550]];
+        let TabOb = document.querySelectorAll('.mini');
+        let one = null;
+        let isProcessing = false;
+
+        let imagesArray = ['2.jpg', '4.jpg', '5.jpg', '2.jpg', '4.jpg', '5.jpg','2.jpg', '4.jpg', '5.jpg','2.jpg', '4.jpg', '5.jpg','2.jpg', '4.jpg', '5.jpg','2.jpg', '4.jpg', '5.jpg'];
+
+        function Mieszaj() {
+            for (let i = imagesArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [imagesArray[i], imagesArray[j]] = [imagesArray[j], imagesArray[i]];
+            }
+
+            for (let i = 0; i < 18; i++) {
+                TabOb[i].style.left = TabPos[i][0] + 'px';
+                TabOb[i].style.top = TabPos[i][1] + 'px';
+                TabOb[i].setAttribute('data-index', i);
+                TabOb[i].setAttribute('data-image', '3.jpg');
+                TabOb[i].innerHTML = `<img src="3.jpg">`;
+            }
+        }
+
+        function Zakryj() {
+            if (!isProcessing) {
+                for (let i = 0; i < 6; i++) {
+                    TabOb[i].setAttribute('data-image', '3.jpg');
+                    TabOb[i].innerHTML = `<img src="3.jpg">`;
+                }
+                one = null;
+            }
+        }
+
+        function Graj(element) {
+            if (!isProcessing && element.getAttribute('data-image') === '3.jpg') {
+                isProcessing = true;
+
+                let index = element.getAttribute('data-index');
+                let currentImage = imagesArray[index];
+                element.setAttribute('data-image', currentImage);
+                element.innerHTML = `<img src='${currentImage}'>`;
+
+                if (one === null) {
+                    one = { element, image: currentImage };
+                    isProcessing = false;
+                } else {
+                    if (one.image === currentImage && one.element !== element) {
+                        setTimeout(() => {
+                            one.element.style.visibility = "hidden";
+                            element.style.visibility = "hidden";
+                            one = null;
+                            isProcessing = false;
+                        }, 500);
+                    } else {
+                        setTimeout(() => {
+                            one.element.setAttribute('data-image', '3.jpg');
+                            element.setAttribute('data-image', '3.jpg');
+                            one.element.innerHTML = `<img src='3.jpg'>`;
+                            element.innerHTML = `<img src='3.jpg'>`;
+                            one = null;
+                            isProcessing = false;
+                        }, 500);
+                    }
+                }
+            }
+        }
+
+        window.onload = function() {
+            Mieszaj();
+        };
+    </script>
+</body>
+</html>
